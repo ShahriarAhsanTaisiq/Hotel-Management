@@ -28,8 +28,9 @@ import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/rooms")
 @CrossOrigin(origins = "http://localhost:5173")
+
+@RequestMapping("/rooms")
 public class RoomController {
 
     private final RoomServiceImpl roomServiceImpl;
@@ -77,7 +78,7 @@ public class RoomController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @PutMapping("/rooms/update/{id}")
+    @PutMapping("/update/{id}")
     public ResponseEntity<RoomResponse> updateRoom( @PathVariable Long id,
                                                     @RequestParam(required = false) String roomType,
                                                     @RequestParam(required = false) BigDecimal roomPrice,

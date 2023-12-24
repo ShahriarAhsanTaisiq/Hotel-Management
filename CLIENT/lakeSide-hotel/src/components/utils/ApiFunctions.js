@@ -1,4 +1,5 @@
 import axios from 'axios';
+import FormData from 'form-data';
 
 export const api = axios.create({
     baseURL: 'http://localhost:9192/' 
@@ -13,9 +14,10 @@ export async function addRoom(photo, roomType, roomPrice) {
         formData.append("roomType", roomType);
         formData.append("roomPrice", roomPrice);
 
-        const response = await api.post('/rooms/new');
+        // console.log("++++ formData:", formData);
+        const response = await api.post('/rooms/new', formData);
         // let data = 0;
-        // console.log("++++ API Response:", response);
+        console.log("++++ API Response:", response);
         if (response.status === 200) {
             // data = 1;
             // console.log("data value:", data);
@@ -62,18 +64,21 @@ export async function deleteRoom(id) {
 }
 
 // This function update a room by ID
-export async function updateRoom(id,roomData) {
-    console.log("abc",roomData)
-    const formData = new FormData();
-    formData.append("roomType", roomData.roomType);
-    formData.append("roomPrice", roomData.roomPrice);
-    formData.append("photo", roomData.photo);
-
+export async function updateRoom(id, photo, roomType, roomPrice) {  
+   console.log("++++ I am from update function ID:", id);
     try {
+        console.log("++++----> API submntion start:" );
+        const formData = new FormData();
+        formData.append("photo", photo);
+        formData.append("roomType", roomType);
+        formData.append("roomPrice", roomPrice);
+
         const response = await api.put(`/rooms/update/${id}`, formData);
+        console.log("++++----> API Response:", response);
         return response;
         } catch (error) {
-        throw new Error(`Error updating room: ${error.message}`, formData);
+            // console.error("Error updating room:", error);
+            throw new Error(`Error updating room: ${error.message}`);
         }
 }
 

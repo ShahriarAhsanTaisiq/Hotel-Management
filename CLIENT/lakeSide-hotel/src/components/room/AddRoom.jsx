@@ -59,9 +59,9 @@ const AddRoom = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            console.log("++++ new room: ", newRoom);
+            console.log("++++ new room from handleSubmit : ", newRoom);
             const success = await addRoom(newRoom.photo, newRoom.roomType, newRoom.roomPrice);
-            // console.log("++++ success value:", success);
+            console.log("++++ success value:", success);
 
             if (success) {
                 setSucessMsg("Room added successfully!");
