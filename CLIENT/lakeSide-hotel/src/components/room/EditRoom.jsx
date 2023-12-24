@@ -26,12 +26,32 @@ const EditRoom = () => {
 
 
 
-    const handleRoomImageChange = (e) => {
-        const selectedImage = e.target.files[0]
-        setRoom({...room, photo:selectedImage})
-        setImagePreview(selectedImage)
+    // const handleRoomImageChange = (e) => {
+    //     const selectedImage = e.target.files[0]
+    //     setRoom({...room, photo:selectedImage})
+    //     setImagePreview(selectedImage)
 
-    }
+    // }
+    const handleRoomImageChange = (e) => {
+        const selectedImage = e.target.files[0];
+    
+        // Check if a file is selected
+        if (selectedImage) {
+            // Read the file and convert it to a base64 string
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                const base64String = reader.result;
+                setRoom({ ...room, photo: selectedImage });
+                setImagePreview(selectedImage);
+            };
+            reader.readAsDataURL(selectedImage);
+        } else {
+            // Handle the case when no file is selected
+            setRoom({ ...room, photo: null });
+            setImagePreview("");
+        }
+    };
+    
 
     const handleRoomInputChange = (event) => { 
         const {name, value} = event.target;
@@ -39,41 +59,93 @@ const EditRoom = () => {
     }
 
     useEffect(() => {
-    const fetchRoom  = async () => { 
-        try {
-            const roomData = await getRoomById(id);
-            setRoom(roomData);
-            setImagePreview(roomData.photo);
-        } catch (error) {
-            console.error("Error fetching room:", error);
-            setErrorMsg(error.message);
+        const fetchRoom = async () => {
+            try {
+                const roomData = await getRoomById(id);
+                setRoom(roomData);
+    
+                // Check if photo is defined before setting imagePreview
+                if (roomData.photo) {
+                    setImagePreview(roomData.photo);
+                } else {
+                    setImagePreview(""); // or set to a default image if needed
+                }
+            } catch (error) {
+                console.error("Error fetching room:", error);
+                setErrorMsg(error.message);
+            }
         }
-    }
+    
+        fetchRoom();
+    }, [id]);
+    
 
-    fetchRoom();
-}, [id]);
+//     useEffect(() => {
+//     const fetchRoom  = async () => { 
+//         try {
+//             const roomData = await getRoomById(id);
+//             setRoom(roomData);
+//             setImagePreview(roomData.photo);
+//         } catch (error) {
+//             console.error("Error fetching room:", error);
+//             setErrorMsg(error.message);
+//         }
+//     }
+
+//     fetchRoom();
+// }, [id]);
 
     
-    const handleSubmit = async (e) => { 
+    // const handleSubmit = async (e) => { 
+    //     e.preventDefault();
+    //     try {
+    //         const success = await updateRoom(id,room);
+    //         if (success.status === 200) {
+    //             setSucessMsg("Room updated successfully!!");
+    //             const updatedRoomData = await getRoomById(id);
+    //             setRoom(updatedRoomData);
+    //             setImagePreview(updatedRoomData.photo);
+    //             setErrorMsg("");
+    //         } else { 
+    //             setErrorMsg("Error updating room. Please try again later.");
+    //             setSucessMsg("");
+    //         }
+    //     }
+    //         catch (error) {
+    //             console.error("Error editing room:", error);
+    //             setErrorMsg(error.message);
+    //         }
+    //     }
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const success = await updateRoom(id,room);
+            const formData = new FormData();
+    
+            // Append photo, roomPrice, and roomType to FormData
+            formData.append('photo', room.photo);
+            formData.append('roomPrice', room.roomPrice);
+            formData.append('roomType', room.roomType);
+    
+            // Call the updateRoom function with FormData
+            const success = await updateRoom(id, formData);
+    
             if (success.status === 200) {
                 setSucessMsg("Room updated successfully!!");
                 const updatedRoomData = await getRoomById(id);
                 setRoom(updatedRoomData);
                 setImagePreview(updatedRoomData.photo);
                 setErrorMsg("");
-            } else { 
+            } else {
                 setErrorMsg("Error updating room. Please try again later.");
                 setSucessMsg("");
             }
+        } catch (error) {
+            console.error("Error editing room:", error);
+            setErrorMsg(error.message);
         }
-            catch (error) {
-                console.error("Error editing room:", error);
-                setErrorMsg(error.message);
-            }
-        }
+    };
+    
                 
 
 
