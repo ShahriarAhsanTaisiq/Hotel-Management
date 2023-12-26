@@ -113,7 +113,7 @@ public class RoomController {
 //                .stream()
 //                .map(booking -> new BookingResponse(
 //                        booking.getBookingId(),
-//                        booking.getCh eckInDate(),
+//                        booking.getCheckInDate(),
 //                        booking.getCheckOutDate(),
 //                        booking.getBookingConfirmationCode()
 //                )).toList();

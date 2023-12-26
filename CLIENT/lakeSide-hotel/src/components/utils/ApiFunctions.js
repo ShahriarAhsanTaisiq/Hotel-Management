@@ -93,4 +93,53 @@ export async function getRoomById(id) {
         throw new Error(`Error getting room: ${error.message}`);
     }
 }
+// This function get all the bookings from the database
+export async function bookRoom(id,booking){
+    try {
+        const response = await api.post(`bookings/room/${id}/booking`,booking);
+        return response.data;
+    }
+    catch(error){
+        if(error.response && error.response.data){
+            throw new Error(error.response.data);
+        }
+        else{
+            throw new Error(`Error Booking Room:  ${error.message}`);
+        }
+    }
+}
 
+// This function get all the bookings from the database
+export async function getAllBookings(){
+    try {
+        const response = await api.get('/bookings/all-bookings');
+        return response.data;
+    } catch (error) {
+        throw new Error(`Error in getting all bookings: ${error.message}`);
+    }
+}
+
+// This function get the bookings by confirmation code from the database
+export async function getBookingByConfirmationCode(confirmationCode){
+    try {
+        const response = await api.get(`/bookings/confirmation/${confirmationCode}`);
+        return response.data;
+    } catch (error) {
+        if(error.response && error.response.data){
+            throw new Error(error.response.data);
+        }else{
+            throw new Error(`Error in getting booking: ${error.message}`);
+        }
+    }
+}
+
+// This function cancel the booking by bookingId from the database
+export async function cancelBooking(bookingId){
+    try {
+        const response = await api.delete(`/bookings/booking/${bookingId}/delete`);
+        return response.data;
+    } catch (error) {
+
+        throw new Error(`Error in cancelling booking: ${error.message}`);
+    }
+}
