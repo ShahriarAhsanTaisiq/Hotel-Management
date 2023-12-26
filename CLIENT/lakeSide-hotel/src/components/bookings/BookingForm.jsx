@@ -139,7 +139,8 @@ const handleFormSubmit = async () => {
                     <div className='col-md-6'>
                         <div className='card card-body mt-5'>
 
-                            <h4> Reserved Room</h4>
+                            <h4> Reserved <br/> Room</h4>
+                            <hr />
                             <Form noValidate ref={formRef} validated={isValidated} onSubmit={handleSubmit}>
                                 <Form.Group>
                                     <Form.Label htmlFor='guestFullName'>Full Name : </Form.Label>
@@ -256,6 +257,7 @@ const handleFormSubmit = async () => {
                                     </button>
                                 </div>
                             </Form>
+                            <hr />
                         </div>
                     </div>
                      <div className='col-md-4'>
@@ -270,7 +272,7 @@ const handleFormSubmit = async () => {
                                         ) : null}
                                      </div>
                                 </div>
-                                
+      
                             </div>
                             </>
                         );

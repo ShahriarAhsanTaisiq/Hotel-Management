@@ -43,7 +43,10 @@ const CheckOut = () => {
                         ) : error ? (
                             <p>{error}</p>
                         )  : (
-                            <div className='room-info'>
+                            
+                            <div className='card card-body room-info'>
+                                <h4>Room Information</h4>
+                                <hr/>
                                 <img
                                 src={`data:image/jpeg;base64,${roomInfo.photo}`}
                                 alt='Room photo'
