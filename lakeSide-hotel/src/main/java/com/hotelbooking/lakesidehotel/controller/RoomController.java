@@ -5,7 +5,6 @@ import com.hotelbooking.lakesidehotel.exception.PhotoRetriverException;
 import com.hotelbooking.lakesidehotel.exception.ResourceNotFoundException;
 import com.hotelbooking.lakesidehotel.model.BookedRoom;
 import com.hotelbooking.lakesidehotel.model.Room;
-import com.hotelbooking.lakesidehotel.response.BookingResponse;
 import com.hotelbooking.lakesidehotel.response.RoomResponse;
 import com.hotelbooking.lakesidehotel.service.BookingService;
 import com.hotelbooking.lakesidehotel.service.RoomServiceImpl;
