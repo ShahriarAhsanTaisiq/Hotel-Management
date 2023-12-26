@@ -118,7 +118,6 @@ const handleFormSubmit = async () => {
     }
 }
 
-
         return (
             <>
             <div className='container mb-5'>
@@ -220,7 +219,7 @@ const handleFormSubmit = async () => {
                                                     
                                                 />
                                                 <Form.Control.Feedback type='invalid'>
-                                                    Please select aleast one adults
+                                                    Please select aleast one adult.
                                                 </Form.Control.Feedback>
                                             </div>
                                             <div className='col-6'>
