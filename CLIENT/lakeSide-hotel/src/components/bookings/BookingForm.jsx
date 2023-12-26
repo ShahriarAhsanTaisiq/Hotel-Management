@@ -80,13 +80,26 @@ const isCheckOutDateValid = () => {
             return true;
         }
 }
+const isCheckInDateValid = () => {
+    const today = moment().startOf('day'); // Get the start of today
+    const checkInDate = moment(booking.checkInDate);
+  
+    if (!checkInDate.isSameOrAfter(today)) {
+      setErrorMessages("Check-in date must be today or after today");
+      return false;
+    } else {
+      setErrorMessages("");
+      return true;
+    }
+  };
+  
 
 const handleSubmit = (e) => {
     e.preventDefault();
   
     const form = formRef.current;
   
-    if (form.checkValidity() === false || !isGuestValid() || !isCheckOutDateValid()) {
+    if (form.checkValidity() === false || !isGuestValid() || !isCheckOutDateValid() || !isCheckInDateValid()) {
       e.stopPropagation();
     } else {
       setIsSubmitted(true);
@@ -123,10 +136,10 @@ const handleFormSubmit = async () => {
             <div className='container mb-5'>
                 <div className='row'>
 
-                    <div className='col-md-4'>
+                    <div className='col-md-6'>
                         <div className='card card-body mt-5'>
 
-                            <h4 className='card card-title '> Reserved Room</h4>
+                            <h4> Reserved Room</h4>
                             <Form noValidate ref={formRef} validated={isValidated} onSubmit={handleSubmit}>
                                 <Form.Group>
                                     <Form.Label htmlFor='guestFullName'>Full Name : </Form.Label>
@@ -164,7 +177,7 @@ const handleFormSubmit = async () => {
                                     </Form.Group>
 
                                     <fieldset style={{border: "2px"}}>
-                                        <legend>Lodging Period</legend>
+                                        <h5 className='mt-2'>Lodging Period</h5 >
                                         <div className='row'>
                                             <div className='col-6'>
                                                     <Form.Label htmlFor='checkInDate'>Check In Date :</Form.Label>
@@ -203,7 +216,7 @@ const handleFormSubmit = async () => {
                                     </fieldset>
 
                                     <fieldset style={{border: "2px"}}>
-                                        <legend>Number of Guest</legend>
+                                        <h5 className='mt-2'>Number of Guest</h5>
                                         <div className='row'>
                                             <div className='col-6'>
                                                 <Form.Label htmlFor='numberOfAdults'>Adults :</Form.Label>
@@ -230,7 +243,8 @@ const handleFormSubmit = async () => {
                                                     id='numberOfChildren'
                                                     name='numberOfChildren'
                                                     value={booking.numberOfChildren}
-                                                    placeholder='0'
+                                                    placeholder='Number of child'
+                                                    min={0}
                                                     onChange={handleInputChange}
                                                      />                                               
                                             </div>
