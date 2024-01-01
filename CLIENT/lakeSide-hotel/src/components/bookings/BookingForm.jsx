@@ -22,8 +22,8 @@ const BookingForm = () => {
         guestEmail: '',
         checkInDate: '',
         checkOutDate: '',
-        numberOfAdults: '',
-        numberOfChildren: '',
+        numOfAdults: '',
+        numOfChildren: ''
     });
 
     const [roomInfo, setRoomInfo] = useState({
@@ -37,6 +37,7 @@ const BookingForm = () => {
     const navigate = useNavigate();
 
 const handleInputChange = (e) => {
+    console.log("handleInputChange");
     const { name, value } = e.target;
     setBooking({ ...booking, [name]: value });
     setErrorMessages("");
@@ -64,9 +65,10 @@ const calculatePayment = () => {
     return diffInDays * price;
 }
 
+
 const isGuestValid = () => {
-    const adultCount = parseInt(booking.numberOfAdults);
-    const childCount = parseInt(booking.numberOfChildren);
+    const adultCount = parseInt(booking.numOfAdults);
+    const childCount = parseInt(booking.numOfChildren);
     const totalCount = adultCount + childCount;
     return totalCount >=1 && adultCount >= 1;
 }
@@ -193,7 +195,7 @@ const handleFormSubmit = async () => {
                                                         
                                                     />
                                                     <Form.Control.Feedback type='invalid'>
-                                                        Please select your check i n date
+                                                        Please select your check in date
                                                     </Form.Control.Feedback>
                                             </div>
                                             <div className='col-6'>
@@ -224,9 +226,9 @@ const handleFormSubmit = async () => {
                                                 <Form.Control
                                                     required
                                                     type='number'
-                                                    id='numberOfAdults'
-                                                    name='numberOfAdults'
-                                                    value={booking.numberOfAdults}
+                                                    id='numOfAdults'
+                                                    name='numOfAdults'
+                                                    value={booking.numOfAdults}
                                                     min={1}
                                                     placeholder='0'
                                                     onChange={handleInputChange}
@@ -241,9 +243,9 @@ const handleFormSubmit = async () => {
                                                 <Form.Control
                                                     required
                                                     type='number'
-                                                    id='numberOfChildren'
-                                                    name='numberOfChildren'
-                                                    value={booking.numberOfChildren}
+                                                    id='numOfChildren'
+                                                    name='numOfChildren'
+                                                    value={booking.numOfChildren}
                                                     placeholder='Number of child'
                                                     min={0}
                                                     onChange={handleInputChange}

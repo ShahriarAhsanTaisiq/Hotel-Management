@@ -36,7 +36,7 @@ const BookingSummary = ({booking, payment, isFormValid,onConfirm}) => {
             <h4>Reservation Summary</h4>
             <hr /> 
 
-            <p>Full Name: <strong> {booking.guestName} </strong></p>
+            <p>Full Name: <strong> {booking.guestFullName} </strong></p>
             <p>Email: <strong> {booking.guestEmail} </strong></p>
             <p>Check In Date: <strong> {moment(booking.checkInDate).format("MMM Do YYYY")} </strong></p>
             <p>Check Out Date: <strong> {moment(booking.checkOutDate).format("MMM Do YYYY")} </strong></p>
@@ -44,9 +44,9 @@ const BookingSummary = ({booking, payment, isFormValid,onConfirm}) => {
 
             <div>
                 <h5>Number of Guests</h5>
-                <strong>Adult{booking.numberOfAdults >1 ? "s": "" } : {booking.numberOfAdults}</strong> <br/>
+                <strong>Adult{booking.numberOfAdults >1 ? "s": "" } : {booking.numOfAdults}</strong> <br/>
                 
-                <strong>Children :{booking.numberOfChildren}</strong> <br/>
+                <strong>Children :{booking.numOfChildren}</strong> <br/>
             </div>
 
             {payment>0 ?(
@@ -74,7 +74,7 @@ const BookingSummary = ({booking, payment, isFormValid,onConfirm}) => {
                 ) : isBookingConfirmed ? (
                     
                     <div className='d-flex justify-content-center aling-item-center'>
-                        <div className='spinner-border text-primary' role='status'>
+                        <div className='spinner-border text-primary text-center' role='status'>
                             <span className='sr-only'>
                                 Loading..
                             </span>

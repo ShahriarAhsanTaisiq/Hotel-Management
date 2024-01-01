@@ -10,7 +10,18 @@ const RoomTypeSelector = ({ handleNewRoomTypeInputChange, newRoom, roomType }) =
 
     const handleClick = (name) => {
         setSelectedName(name);
-        roomType(name);
+        if (name === 'Add New') {
+            setShowNewRoomTypeInput(true);
+        } else {
+            if (typeof handleNewRoomTypeInputChange === 'function') {
+                handleNewRoomTypeInputChange({
+                    target: {
+                        name: 'roomType',
+                        value: name,
+                    },
+                });
+            }
+        }
     };
 
     useEffect(() => {
@@ -20,11 +31,17 @@ const RoomTypeSelector = ({ handleNewRoomTypeInputChange, newRoom, roomType }) =
     }, []);
 
     const handleAddNewRoomType = () => {
-        console.log("++++ In Handle Add New Room Type");
         if (newRoomType !== '') {
             setRoomTypes([...roomTypes, newRoomType]);
             setNewRoomType('');
-            roomType(newRoomType);
+            if (typeof handleNewRoomTypeInputChange === 'function') {
+                handleNewRoomTypeInputChange({
+                    target: {
+                        name: 'roomType',
+                        value: newRoomType,
+                    },
+                });
+            }
             setShowNewRoomTypeInput(false);
         }
     };
@@ -39,20 +56,12 @@ const RoomTypeSelector = ({ handleNewRoomTypeInputChange, newRoom, roomType }) =
                         name='roomType'
                         value={newRoom.roomType}
                         onChange={(e) => {
-                            // console.log("e.target.value:", e.target.value);
-                            if (e.target.value === 'Add New') {
-                                setShowNewRoomTypeInput(true);
-                            } else {
-                                handleClick(e.target.value);
-                            }
+                            handleClick(e.target.value);
                         }}>
                         <option value=''>{selectedName}</option>
                         <option value='Add New'>Add New</option>
                         {roomTypes.map((type, index) => (
                             <option
-                                onClick={() => {
-                                    handleClick(type);
-                                }}
                                 key={index}
                                 value={type}>
                                 {type}
@@ -83,5 +92,3 @@ const RoomTypeSelector = ({ handleNewRoomTypeInputChange, newRoom, roomType }) =
 };
 
 export default RoomTypeSelector;
-
-// Path: lakeSide-hotel/src/components/common/RoomTypeSelector.jsx

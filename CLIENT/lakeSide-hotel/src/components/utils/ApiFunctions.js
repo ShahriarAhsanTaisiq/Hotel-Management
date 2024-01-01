@@ -135,6 +135,7 @@ export async function getBookingByConfirmationCode(confirmationCode){
 
 // This function cancel the booking by bookingId from the database
 export async function cancelBooking(bookingId){
+    // console.log("++++ I am froom cancelBooking function bookingId:", bookingId);
     try {
         const response = await api.delete(`/bookings/booking/${bookingId}/delete`);
         return response.data;
@@ -142,4 +143,15 @@ export async function cancelBooking(bookingId){
 
         throw new Error(`Error in cancelling booking: ${error.message}`);
     }
+}
+
+// This function gets all available rooms from database with a given date and room type
+export async function getAvailableRooms(checkInDate, checkOutDate, roomType){
+    // console.log("GetAvailableRooms function roomType:", roomType);
+    // console.log("GetAvailableRooms function checkInDate:", checkInDate);
+    // console.log("GetAvailableRooms function checkOutDate:", checkOutDate);
+    const response = await api.get(`/rooms/available-rooms?checkInDate=${checkInDate}&checkOutDate=${checkOutDate}&roomType=${roomType}`);
+    // console.log("++++ API Response getAvailableRooms :", response);
+    return response;
+
 }

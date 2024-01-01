@@ -11,7 +11,7 @@ import { Card } from 'react-bootstrap';
 const RoomCarousel = () => {
     const[rooms , setRooms] = useState([{id:"",roomType:"",roomPrice:"",photo:""}])
     const[errorMessage , setErrorMessage] = useState('')
-    const[loading , setLoading] = useState(false)
+    const[loading , setLoading] = useState(true)
 
 
     useEffect(() => {

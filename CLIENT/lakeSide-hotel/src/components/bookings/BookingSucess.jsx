@@ -1,7 +1,6 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
-import MainHeader from '../layout/MainHeader';
-
+import Header from '../common/Header';
 
 
 const BookingSuccess = () => {
@@ -12,7 +11,7 @@ const BookingSuccess = () => {
 
     return (
         <div className='container'>
-            <MainHeader title = "Booking Sucess"/>
+            <Header title = {"Booking Sucess"}/>
             <div className='mt-5'>
                 {message ? (
                     <div>
