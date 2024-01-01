@@ -88,8 +88,6 @@ const handleDelete = async (id) => {
         //   console.log("Total Pages:", Math.ceil(totalRooms / roomsPerPage));
         return Math.ceil(totalRooms / roomsPerPage);
       };
-      
-    
     
     
     const indexOfLastRoom = currentPage * roomsPerPage;
@@ -145,25 +143,21 @@ const handleDelete = async (id) => {
                                         <td className='gap-2'>
                                         <Link to={`/edit-room/${room.id}`}>
                                                 
-                                                <span className='btn btn-info btn-sm'>
-                                                  <FaEye/> 
-                                                  </span>
-                                                <span className='btn btn-warning btn-sm'> 
+                                            <span className='btn btn-info btn-sm'>
+                                                <FaEye/> 
+                                            </span>
+                                            <span className='btn btn-warning btn-sm'> 
                                                 <FaEdit/> 
-                                                </span>
+                                            </span>
                                                  
-                                                 </Link>
- 
-
-                                            <button
+                                        </Link>
+                                         <button
                                             className='btn btn-danger btn-sm'
-                                            onClick={() => handleDelete(room.id)}>
-                                                
+                                            onClick={() => handleDelete(room.id)}>                                                
                                                 <FaTrashAlt/>
-                                                </button>
-                                            
-                                        </td>
-                                    </tr>
+                                        </button>                                           
+                                    </td>
+                                </tr>
                                 ))}
                             </tbody>
 
@@ -173,9 +167,7 @@ const handleDelete = async (id) => {
                             currentPage={currentPage}
                             totalPages={calculateTotalPages(filteredRooms, roomsPerPage, rooms)}
                             onPageChange={handlePaginationClick}
-                            />
-
-
+                        />
                 </section>
                 </>
             )    
