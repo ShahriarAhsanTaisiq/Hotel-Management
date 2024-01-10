@@ -36,7 +36,6 @@ public class Room {
     public Room(){
         this.bookings = new ArrayList<>();
     }
-
     public void addBooking(BookedRoom booking){
         if (bookings == null){
             bookings =  new ArrayList<>();

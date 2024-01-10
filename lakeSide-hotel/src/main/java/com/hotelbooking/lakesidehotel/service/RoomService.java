@@ -1,6 +1,7 @@
 package com.hotelbooking.lakesidehotel.service;
 
 import com.hotelbooking.lakesidehotel.exception.InternalServerException;
+import com.hotelbooking.lakesidehotel.model.BookedRoom;
 import com.hotelbooking.lakesidehotel.model.Room;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -27,4 +28,5 @@ public interface RoomService  {
     Optional<Room> getRoomById(Long id);
 
     List<Room> getAvailableRooms(LocalDate checkInDate, LocalDate checkOutData, String roomType);
+
 }

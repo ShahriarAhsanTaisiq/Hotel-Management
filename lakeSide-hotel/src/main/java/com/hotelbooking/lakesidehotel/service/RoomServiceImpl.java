@@ -106,5 +106,6 @@ public class RoomServiceImpl implements RoomService {
     public List<Room> getAvailableRooms(LocalDate checkInDate, LocalDate checkOutDate, String roomType) {
         return roomRepository.findAvailableRoomsByDateAndType(checkInDate,checkOutDate,roomType);
     }
+
 }
 
