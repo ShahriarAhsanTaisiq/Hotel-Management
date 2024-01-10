@@ -5,6 +5,13 @@ export const api = axios.create({
     baseURL: 'http://localhost:9192/' 
 });
 
+export const getHeader = () => {
+    const token = localStorage.getItem('token');
+    return {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json"   
+    }
+}
 
 // This function add a new room to the database
 export async function addRoom(photo, roomType, roomPrice) {
@@ -154,4 +161,43 @@ export async function getAvailableRooms(checkInDate, checkOutDate, roomType){
     // console.log("++++ API Response getAvailableRooms :", response);
     return response;
 
+}
+
+export async function registerUser(registration){
+    try{
+        const response = await api.post('/auth/register-user', registration);
+        return response.data;
+    } catch{
+        if(error.response && error.response.data){
+            throw new Error(error.response.data);
+    }else{
+        throw new Error(`User registraiton error : ${error.message}`);
+    }
+}
+}
+
+export async function loginUser(login) {
+    try {
+        const response = await api.post('/auth/login', login);
+        if (response.status >= 200 && response.status <= 299) {
+            return response.data;
+        } else {
+            return null;
+        }
+
+    } catch (error) {
+        console.log("Error in login function:", error);
+        return null;
+    }
+}
+
+export async function getUserProfile(userId, token) {
+    try{
+        const response = await api.get(`/users/profile/${userId}`, {
+            headers: getHeader()
+        })
+        return response.data;
+    }catch(error){
+        throw error;
+    }
 }
