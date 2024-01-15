@@ -21,13 +21,9 @@ export async function addRoom(photo, roomType, roomPrice) {
         formData.append("roomType", roomType);
         formData.append("roomPrice", roomPrice);
 
-        // console.log("++++ formData:", formData);
         const response = await api.post('/rooms/new', formData);
-        // let data = 0;
         console.log("++++ API Response:", response);
         if (response.status === 200) {
-            // data = 1;
-            // console.log("data value:", data);
             return true;
         } else {
             throw new Error(`Failed to add room. Server returned status: ${response.status}`);
@@ -59,10 +55,8 @@ export default async function getAllRooms() {
 
 // This function delete a room by ID
 export async function deleteRoom(id) {
-    console.log("++++ I am froom delete function ID:", id);
     try {
         const response = await api.delete(`/rooms/delete/room/${id}`);
-        console.log("++++ API Response:", response);
            return response;
          
     } catch (error) {
@@ -74,27 +68,22 @@ export async function deleteRoom(id) {
 export async function updateRoom(id, photo, roomType, roomPrice) {  
    console.log("++++ I am from update function ID:", id);
     try {
-        console.log("++++----> API submntion start:" );
         const formData = new FormData();
         formData.append("photo", photo);
         formData.append("roomType", roomType);
         formData.append("roomPrice", roomPrice);
 
         const response = await api.put(`/rooms/update/${id}`, formData);
-        console.log("++++----> API Response:", response);
         return response;
         } catch (error) {
-            // console.error("Error updating room:", error);
             throw new Error(`Error updating room: ${error.message}`);
         }
 }
 
 // This function get a room by ID
 export async function getRoomById(id) {
-    // console.log("++++ I am froom getRoomById function ID:", id);
     try {
         const response = await api.get(`/rooms/room/${id}`);
-        // console.log("++++ API Response getRoomById :", response);
         return response.data;
     } catch (error) {
         throw new Error(`Error getting room: ${error.message}`);
@@ -104,7 +93,6 @@ export async function getRoomById(id) {
 export async function bookRoom(id,booking){
     try {
         const response = await api.post(`bookings/room/${id}/booking`,booking);
-        console.log(" API Response from bookRoom : ", response);
         return response.data;
     }
     catch(error){
@@ -143,7 +131,6 @@ export async function getBookingByConfirmationCode(confirmationCode){
 
 // This function cancel the booking by bookingId from the database
 export async function cancelBooking(bookingId){
-    // console.log("++++ I am froom cancelBooking function bookingId:", bookingId);
     try {
         const response = await api.delete(`/bookings/booking/${bookingId}/delete`);
         return response.data;
@@ -155,11 +142,7 @@ export async function cancelBooking(bookingId){
 
 // This function gets all available rooms from database with a given date and room type
 export async function getAvailableRooms(checkInDate, checkOutDate, roomType){
-    // console.log("GetAvailableRooms function roomType:", roomType);
-    // console.log("GetAvailableRooms function checkInDate:", checkInDate);
-    // console.log("GetAvailableRooms function checkOutDate:", checkOutDate);
     const response = await api.get(`/rooms/available-rooms?checkInDate=${checkInDate}&checkOutDate=${checkOutDate}&roomType=${roomType}`);
-    // console.log("++++ API Response getAvailableRooms :", response);
     return response;
 
 }
