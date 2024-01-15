@@ -59,6 +59,12 @@ public class BookingServiceImpl implements  BookingService{
         return bookingRepository.findByRoomId(roomId);
     }
 
+    @Override
+    public List<BookedRoom> getBookingsByUserEmail(String email) {
+        return bookingRepository.findByGuestEmail(email);
+    }
+
+
     private boolean roomIsAvailable(BookedRoom bookingRequest, List<BookedRoom> existingBookings) {
         return existingBookings.stream()
 

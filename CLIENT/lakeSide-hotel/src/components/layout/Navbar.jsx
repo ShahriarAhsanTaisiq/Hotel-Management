@@ -1,14 +1,36 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { useState } from 'react';
+import Logout from '../auth/Logout';
+import { AuthContext } from '../auth/AuthProvider';
+
+
+
+
 
 
 const NavBar = () => {
     const [showAccount, setShowAccount] = useState(false);
+    const {user}=useContext(AuthContext)
 
     const handleAccountClick = () => {
         setShowAccount(!showAccount);
     }
+
+
+        // ...
+
+        const handleAccountHover = () => {
+            setShowAccount(true);
+        };
+
+        const handleAccountLeave = () => {
+            setShowAccount(false);
+        };
+
+
+    const isLoggedIn = user !== null
+    const userRole = localStorage.getItem('userRole')
 
 
     return (
@@ -42,14 +64,16 @@ const NavBar = () => {
                                 Browse All Rooms
                                 </NavLink>
                         </li>
-                        <li className='nav-item'>
-                            <NavLink
-                            className='nav-link'
-                            aria-current='page'
-                            to={"/admin"}>
-                                Admin
-                                </NavLink>
-                        </li>
+                        {isLoggedIn && userRole === 'ROLE_ADMIN' && (
+                            <li className='nav-item'>
+                                <NavLink className='nav-link'
+                                aria-current='page'
+                                to={"/admin"}>
+                                    Admin
+                                    </NavLink>
+                            </li>
+                        )
+                        }
                     </ul>
 
 
@@ -61,45 +85,32 @@ const NavBar = () => {
                                 </NavLink>
                         </li>
 
-                        <li className='nav-item dropdown'>
+                        <li className='nav-item dropdown' onMouseEnter={handleAccountHover} onMouseLeave={handleAccountLeave}>
                             <a
                             className={`nav-link dropdown-toggle ${showAccount ? 'show' : ''}`} 
                             href="#"
                             role='button'
                             data-bs-toggle='dropdown'
                             aria-expanded='false'
-                            onClick={handleAccountClick}>
+                            onClick={handleAccountClick}
+                            >
                                 {" "}
                                 Account
                             </a>
 
-                            <ul className={`dropdown-menu ${showAccount ? 'show' : ''}`}
-                            aria-labelledby='navbarDropdown' 
-                            >
-                                <li>
-                                    <Link to={"/login"} className='dropdown-item'>
-                                        Login
-                                    </Link>
-                                </li>
-
-                                <li>
-                                    <Link to={"/profile"} className='dropdown-item'>
-                                        Profile
-                                    </Link>
-                                </li>
-
-                                <li>
-                                    <hr className='dropdown-devider'/>
-                                </li>
-
-                                <li>
-                                    <Link to={"/logout"} className='dropdown-item'>
-                                        Logout
-                                    </Link>
-                                </li>
-
-
-                            </ul>
+                            <ul
+								className={`dropdown-menu ${showAccount ? "show" : ""}`}
+								aria-labelledby="navbarDropdown">
+								{isLoggedIn ? (
+									<Logout />
+								) : (
+									<li>
+										<Link className="dropdown-item" to={"/login"}>
+											Login
+										</Link>
+									</li>
+								)}
+							</ul>
 
                         </li>
 
@@ -109,7 +120,6 @@ const NavBar = () => {
 
 
             </div>
-            {/* Your navigation bar content goes here */}
         </nav>
     );
 };

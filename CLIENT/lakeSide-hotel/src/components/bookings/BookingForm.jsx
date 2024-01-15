@@ -17,9 +17,12 @@ const BookingForm = () => {
     const [isSubmitted, setIsSubmitted] = useState(false);
     const [errorMessages, setErrorMessages] = useState('');
     const [roomPrice, setRoomPrice] = useState(0);
+
+    const currentUser = localStorage.getItem('userId');
+
     const [booking, setBooking] = useState({
         guestFullName: '',
-        guestEmail: '',
+        guestEmail: currentUser,
         checkInDate: '',
         checkOutDate: '',
         numOfAdults: '',

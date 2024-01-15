@@ -1,87 +1,87 @@
-import React from 'react';
-import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { loginUser } from '../utils/ApiFunction';
-import jwtDecode from 'jwt-decode';
-
+import React, { useState } from "react"
+import { loginUser } from "../utils/ApiFunctions"
+import { Link, useLocation, useNavigate } from "react-router-dom"
+import { useAuth } from "./AuthProvider"
 
 const Login = () => {
+	const [errorMessage, setErrorMessage] = useState("")
+	const [login, setLogin] = useState({
+		email: "",
+		password: ""
+	})
 
-    const[errorMessager, setErrorMessager] = useState('')
-    const [login, setLogin] = useState({
-        email: '',
-        password: ''
-    })
+	const navigate = useNavigate()
+	const auth = useAuth()
+	const location = useLocation()
+	const redirectUrl = location.state?.path || "/"
 
-    const navigate = useNavigate()
+	const handleInputChange = (e) => {
+		setLogin({ ...login, [e.target.name]: e.target.value })
+	}
 
-    const handleInputChange = (e) => {
-        setLogin({...login,[e.target.name]: e.target.value})
-    }
+	const handleSubmit = async (e) => {
+		e.preventDefault()
+		const success = await loginUser(login)
+		if (success) {
+			const token = success.token
+			auth.handleLogin(token)
+			navigate(redirectUrl, { replace: true })
+		} else {
+			setErrorMessage("Invalid username or password. Please try again.")
+		}
+		setTimeout(() => {
+			setErrorMessage("")
+		}, 4000)
+	}
 
-    const handleLogin = async(e) => {
-        e.preventDefault()
-        const sucess = await loginUser(login)
-        if(sucess){
-            const token = sucess.token
-            const decodedToken = jwtDecode(token)
-            localStorage.setItem('jwtToken', token)
-            localStorage.setItem('userId', decodedToken.sub)
-            localStorage.setItem('userRole', decodedToken.role)
-            navigate('/')
-            window.location.reload()          
-        }else{
-            setErrorMessager('Invalid email or password.Please enter correct email and password')
-        }
-        setTimeout(() => {
-            setErrorMessager('')
-        }
-        , 4000)
-    }
+	return (
+		<section className="container col-6 mt-5 mb-5">
+			{errorMessage && <p className="alert alert-danger">{errorMessage}</p>}
+			<h2>Login</h2>
+			<form onSubmit={handleSubmit}>
+				<div className="row mb-3">
+					<label htmlFor="email" className="col-sm-2 col-form-label">
+						Email
+					</label>
+					<div>
+						<input
+							id="email"
+							name="email"
+							type="email"
+							className="form-control"
+							value={login.email}
+							onChange={handleInputChange}
+						/>
+					</div>
+				</div>
 
-    return (
-        <section className='container col-6 mt-5 mb-5'>
-            {errorMessager && <div className='alert alert-danger'>{errorMessager}</div>}
-            <h2>Login</h2>
-            <form onSubmit={handleLogin}>
-                <div className='row mb-3'>
-                    <label htmlFor="email" className='col-sm-2 col-form-label'>Email</label>
-                    <div>
-                        <input
-                            type="email"
-                            className='form-control'
-                            id='email'
-                            name='email'
-                            value={login.email}
-                            onChange={handleInputChange}
-                            required 
-                        />
-                    </div>
-                </div>
-                <div className='row mb-3'>
-                    <label htmlFor="password" className='col-sm-2 col-form-label'>Password</label>
-                    <div>
-                        <input
-                            type="password"
-                            className='form-control'
-                            id='password'
-                            name='password'
-                            value={login.password}
-                            onChange={handleInputChange}
-                            required 
-                        />
-                    </div>
-                </div>
-                <div className='mb-3'>
-                    <button type='submit' className='btn btn-hotel' style={{marginRight:"10px"}}>Login</button>
-                    <span style={{marginLeft: "10px"}}>Don't have an account yet?
-                    <Link to ={"/register"}></Link>
-                    </span>
-                </div>
+				<div className="row mb-3">
+					<label htmlFor="password" className="col-sm-2 col-form-label">
+						Password
+					</label>
+					<div>
+						<input
+							id="password"
+							name="password"
+							type="password"
+							className="form-control"
+							value={login.password}
+							onChange={handleInputChange}
+						/>
+					</div>
+				</div>
 
-            </form>
-        </section>
-    );
-};
+				<div className="mb-3">
+					<button type="submit" className="btn btn-hotel" style={{ marginRight: "10px" }}>
+						Login
+					</button>
+					<span style={{ marginLeft: "10px" }}>
+						Don't' have an account yet?<Link to={"/register"}> Register</Link>
+					</span>
+				</div>
+			</form>
+		</section>
+	)
+}
 
-export default Login;
+export default Login

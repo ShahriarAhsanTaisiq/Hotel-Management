@@ -1,14 +1,14 @@
 import React from 'react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { registerUser } from '../utils/ApiFunction';
+import { registerUser } from '../utils/ApiFunctions';
 
 
 
 const Registration = () => {
     const [registration, setRegistration] = useState({
         firstName: '',
-        lastName: '',
+        lastName: '',  
         email: '',
         password: ''
     })
@@ -103,9 +103,9 @@ const Registration = () => {
                 </div>
 
                 <div className='mb-3'>
-                    <button className='btn btn-primary' style={{marginRight: "10px"}}>Register</button>
+                    <button className='btn btn-hotel' style={{marginRight: "10px"}}>Register</button>
                     <span style={{marginLeft: "10px"}}>Already have an account?
-                    <Link to ={"/login"}></Link>
+                    <Link to ={"/login"}>Login</Link>
                     </span>                  
                 </div>
             </form>

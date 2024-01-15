@@ -121,14 +121,14 @@ const FindBooking = () => {
                         <p><strong>Confirmation Code:</strong> {bookingInfo.bookingConfirmationCode}</p>
                         <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between' }}>
                         <div style={{ flexBasis: '48%' }}>
-                            <p><strong>Confirmation Code:</strong> {bookingInfo.bookingConfirmationCode}</p>
+                            {/* <p><strong>Confirmation Code:</strong> {bookingInfo.bookingConfirmationCode}</p> */}
                             <p><strong>Booking ID:</strong> {bookingInfo.bookingId}</p>
-                            <p><strong>Room Details:</strong></p>
+                            <p><strong>Room Details:</strong><hr /></p>
                             <ul>
                             <li><strong>Room No:</strong> {bookingInfo.room.id}</li>
                             <li><strong>Room Type:</strong> {bookingInfo.room.roomType}</li>
                             </ul>
-                            <p><strong>Stay Dates:</strong></p>
+                            <p><strong>Stay Dates:</strong><hr /></p>
                             <ul>
                             <li><strong>Check In:</strong> {bookingInfo.checkInDate}</li>
                             <li><strong>Check Out:</strong> {bookingInfo.checkOutDate}</li>
@@ -137,13 +137,13 @@ const FindBooking = () => {
 
                         <div style={{ flexBasis: '48%' }}>
 
-                            <p><strong>Guest Information:</strong></p>
+                            <p><strong>Guest Information:</strong><hr /></p>
                             <ul>
                             <li><strong>Name:</strong> {bookingInfo.guestFullName}</li>
                             <li><strong>Email:</strong> {bookingInfo.guestEmail}</li>
                             </ul>
 
-                            <p><strong>Number of Guests:</strong></p>
+                            <p><strong>Number of Guests:</strong><hr /></p>
                             <ul>
                             <li><strong>Adults:</strong> {bookingInfo.numOfAdults}</li>
                             <li><strong>Children:</strong> {bookingInfo.numOfChildren}</li>
